@@ -3,7 +3,7 @@ import image from '../../assets/user.png'; // Importe sua imagem aqui
 import styles from './style.module.css'; // Importando os estilos do módulo CSS
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
-function Card({ numStars }) {
+function Card({ numStars , categoria , nome }) {
   // Função para renderizar as estrelas com base no número recebido via props
   const renderStars = () => {
     const stars = [];
@@ -21,10 +21,9 @@ function Card({ numStars }) {
     <div className={styles.card}>
       <img src={image} alt="Foto" />
       <div className={styles.info}>
-        <h3>Trabalhador</h3>
-        <p>Pedreiro</p>
+        <h3>{nome}</h3>
+        <p>{categoria}</p>
         <div>{renderStars()}</div> {/* Renderizando as estrelas */}
-      
       </div>
       <button>Saiba Mais</button>
     </div>
