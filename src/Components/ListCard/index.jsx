@@ -19,9 +19,9 @@ function ListCards() {
       </div>
     </nav>
 <ul className="list-group list-group-flush">
-  <li className="list-group-item"><Card/></li>
-  <li className="list-group-item"><Card/></li>
-  <li className="list-group-item"><Card/></li>
+  <li className="list-group-item"><Card numStars={3} /></li>
+  <li className="list-group-item"><Card numStars={2}/></li>
+  <li className="list-group-item"><Card numStars={4}/></li>
 
 </ul>
     </div>

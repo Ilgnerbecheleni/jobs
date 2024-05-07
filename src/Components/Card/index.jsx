@@ -1,23 +1,34 @@
 import React from 'react';
-import image from '../../assets/user.png';
+import image from '../../assets/user.png'; // Importe sua imagem aqui
+import styles from './style.module.css'; // Importando os estilos do módulo CSS
+import { FaStar, FaRegStar } from 'react-icons/fa';
 
-function Card() {
+function Card({ numStars }) {
+  // Função para renderizar as estrelas com base no número recebido via props
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < numStars) {
+        stars.push(<FaStar key={i} />);
+      } else {
+        stars.push(<FaRegStar key={i} />);
+      }
+    }
+    return stars;
+  };
+
   return (
-    <div className="card mb-3" style={{ width: '100%', border: 'none' }}>
-      <div className="row g-0">
-        <div className="col-md-4">
-          <img src={image} className="img-fluid rounded-start w-25" alt="imagem" />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <a href="#" className="btn btn-primary">Detalhes</a>
-          </div>
-        </div>
+    <div className={styles.card}>
+      <img src={image} alt="Foto" />
+      <div className={styles.info}>
+        <h3>Trabalhador</h3>
+        <p>Pedreiro</p>
+        <div>{renderStars()}</div> {/* Renderizando as estrelas */}
+      
       </div>
+      <button>Saiba Mais</button>
     </div>
-  )
+  );
 }
 
 export default Card;
