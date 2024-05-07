@@ -1,0 +1,15 @@
+/* style.module.css */
+.list{
+  display: flex;
+  flex-direction: column;
+  gap:18px;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+  height: 100%;
+}
+  /* Adaptação para dispositivos móveis */
+  @media (max-width: 768px) {
+   
+  }
+  
