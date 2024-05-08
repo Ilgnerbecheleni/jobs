@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import image from '../../assets/user.png'; // Importe sua imagem aqui
 import styles from './style.module.css'; // Importando os estilos do módulo CSS
 import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
