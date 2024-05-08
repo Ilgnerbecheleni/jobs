@@ -1,0 +1,41 @@
+.cardsession {
+ display: flex;
+ align-items: center;
+ flex-wrap: wrap;
+ width: 100%;
+ gap:10px;
+ justify-content: space-around;
+ padding: 0 8px;
+}
+
+.maincontent{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap:10px;
+  justify-content: space-evenly;
+  
+}
+.content{
+display: flex;
+align-items: center;
+flex-direction: column;
+text-align: center;
+font-size: 1em;
+}
+
+.content h1{
+  padding: 2px 8px;
+}
+  /* Adaptação para dispositivos móveis */
+  @media (max-width: 768px) {
+   .cardsession{
+    gap:30px;
+   }
+
+   .content{
+    font-size: 1em;
+   }
+  }
+  

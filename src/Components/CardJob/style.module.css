@@ -1,0 +1,27 @@
+.cardjob {
+  width: 200px;
+  height: 250px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0; 
+}
+
+.cardimg {
+  width: 80%;
+  height: auto;
+  max-width: 150px; /* Defina o tamanho máximo da imagem */
+}
+
+  /* Adaptação para dispositivos móveis */
+  @media (max-width: 768px) {
+    .cardjob{
+       width: 130px;
+       height: 150px;
+ 
+    }
+  }
+  
