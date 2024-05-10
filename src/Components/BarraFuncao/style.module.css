@@ -15,6 +15,15 @@
   gap:12px
 }
 
+
+
+.btnOutlineInfo:hover {
+  color: #fff;
+  background-color: #17a2b8; /* Cor azul ao passar o mouse */
+  border-color: #17a2b8; /* Cor azul ao passar o mouse */
+}
+
+
 .btnOutlineInfo {
   color: white;
   background-color: transparent;
@@ -22,17 +31,9 @@
   padding: 0.375rem 0.75rem;
   text-decoration: none;
   text-transform: uppercase;
-  width: 150px;
-  
   padding: 6px 10px;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-}
-
-.btnOutlineInfo:hover {
-  color: #fff;
-  background-color: #17a2b8; /* Cor azul ao passar o mouse */
-  border-color: #17a2b8; /* Cor azul ao passar o mouse */
 }
 
 .btnSuccess {
@@ -41,9 +42,11 @@
   padding: 0.375rem 0.75rem;
   text-decoration: none;
   text-transform: uppercase;
-  width: 150px;
+  width: 180px;
+  text-align: center;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  margin-right: 8px;
 }
 
 .btnSuccess:hover {

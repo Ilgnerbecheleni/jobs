@@ -4,16 +4,26 @@ import Jobs from '../Screens/Jobs'
 import Job from '../Screens/Job'
 import Login from '../Screens/Login'
 import CadastroJob from '../Screens/CadastroJob'
+import { Fragment } from 'react'
+import PrivateRoutes from './PrivateRoutes'
 
 function Rotas() {
   return (
     <Routes>
+    <Fragment>
       <Route path={'/'}  element={<Home/>}/>
       <Route path={'/jobs'} element={<Jobs/>}/>
-      <Route path={'/job/:id'} element={<Job/>}/>
       <Route path={'/login'} element={<Login/>}/>
-      <Route path={'/cadastro'} element={<CadastroJob/>}/>
-    </Routes>
+
+      {/* Envolver as rotas que você deseja proteger com PrivateRoutes */}
+      <Route path='/' element={<PrivateRoutes/>}>
+      <Route path={'/job/:id'} element={<Job/>}/>
+        <Route path={'job/cadastro'} element={<CadastroJob/>}/>
+      </Route>
+      
+   
+    </Fragment>   
+  </Routes>
   )
 }
 
