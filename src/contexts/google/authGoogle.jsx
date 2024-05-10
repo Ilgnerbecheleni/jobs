@@ -57,7 +57,7 @@ useEffect(()=>{
 function SignOut(){
     sessionStorage.clear();
     setUser(null);
-    return <Navigate to='/'/>
+    return <Navigate to='/jobs'/>
 }
           return (
             <AuthGoogleContext.Provider value={{signingoogle, user, signed: !!user,SignOut}}>

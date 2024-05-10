@@ -8,11 +8,12 @@ function CardUser() {
 const [name , setName]= useState()
 
 
-const { user, signed,SignOut } = useContext(AuthGoogleContext);
+const {signed,SignOut } = useContext(AuthGoogleContext);
 
   useEffect(() => {
    if(signed){
-    const logado = JSON.parse(user);
+    const sessionUser = sessionStorage.getItem('@Authfirebase:user');
+    const logado = JSON.parse(sessionUser);
     if (logado !== undefined) {
       setName(logado.displayName.split(' ')[0]);
    setPhoto(logado.photoURL)
@@ -24,7 +25,7 @@ const { user, signed,SignOut } = useContext(AuthGoogleContext);
 
   return (
     <div className={styles.carduser}>
-   <div className={styles.userinfo}>
+   <div className={styles.carduser}>
    <img src={photo} alt="" className={styles.imguser}/>
     <h6 className={styles.nomeuser}>{name}</h6>
    </div>
