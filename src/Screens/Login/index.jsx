@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import image from '../../assets/autonomo.jpg';
+import image from '../../assets/job-login.svg';
 import { Navigate } from 'react-router-dom';
 import { AuthGoogleContext } from '../../contexts/google/authGoogle';
 

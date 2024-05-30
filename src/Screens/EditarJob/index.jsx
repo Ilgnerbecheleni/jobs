@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../services/api';
+import {   Navigate, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-function CadastroJob() {
+import api from '../../services/api';
+
+function EditarJob() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
   const [cep, setCep] = useState('');
   const [localidade, setLocalidade] = useState('');
-  const [cepError, setCepError] = useState(false);
+  const [valorHora, setValorHora] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
-  const [valorHora, setValorHora] = useState('');
+  const [cepError, setCepError] = useState(false);
 
   useEffect(() => {
     fetchCategorias();
-  }, []);
+    fetchJobData();
+  }, [id]);
 
   const fetchCategorias = async () => {
     try {
@@ -24,28 +30,39 @@ function CadastroJob() {
     }
   };
 
+  const fetchJobData = async () => {
+    try {
+      const response = await api.get(`trabalhos/${id}`);
+      const job = response.data;
+      setNome(job.titulo);
+      setTelefone(job.telefone);
+      setCep(job.cep);
+      setLocalidade(job.localizacao);
+      setValorHora(job.valorHora);
+      setCategoriaSelecionada(job.servicoId);
+    } catch (error) {
+      console.error('Erro ao buscar dados do job:', error);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post(
-        'trabalhos',
+      const response = await api.patch(
+        `trabalhos/${id}`,
         {
           titulo: nome,
           telefone,
           localizacao: localidade,
-          valorHora: parseFloat(valorHora), // Convertendo para float
+          valorHora: parseFloat(valorHora),
           servicoId: categoriaSelecionada
         }
       );
       console.log('Resposta da API:', response.data);
-      setNome('');
-      setTelefone('');
-      setCep('');
-      setLocalidade('');
-      setCategoriaSelecionada('');
-      setValorHora('');
+      navigate('/jobs')
+ 
     } catch (error) {
-      console.error('Erro ao cadastrar job:', error);
+      console.error('Erro ao atualizar job:', error);
     }
   };
 
@@ -58,6 +75,11 @@ function CadastroJob() {
       setCepError(false);
     }
   };
+
+  function Redirect(){
+   
+    return <Navigate to='/jobs'/>
+}
 
   const fetchCEP = async (cep) => {
     try {
@@ -77,7 +99,7 @@ function CadastroJob() {
 
   return (
     <section className='container mt-5'>
-      <h3 className='display-4'>Cadastre um Serviço</h3>
+      <h3 className='display-4'>Editar Serviço</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="nome" className="form-label">Nome de Exibição do Job</label>
@@ -109,10 +131,10 @@ function CadastroJob() {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Cadastrar Job</button>
+        <button type="submit" className="btn btn-primary">Atualizar Job</button>
       </form>
     </section>
   );
 }
 
-export default CadastroJob;
+export default EditarJob;

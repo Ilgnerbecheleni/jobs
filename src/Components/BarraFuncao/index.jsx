@@ -24,7 +24,7 @@ function BarraFuncao() {
         {/* Renderiza o botão de login apenas se o usuário não estiver logado */}
         {!signed ? (
           <li className="nav-item">
-            <NavLink className={styles.btnOutlineInfo} activeClassName="active" to="/login">Login</NavLink>
+            <NavLink className={styles.btnOutlineInfo}  to="/login">Login</NavLink>
           </li>
         ) : (
           // Renderiza o botão de logout e outros elementos quando o usuário estiver autenticado

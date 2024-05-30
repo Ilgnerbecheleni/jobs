@@ -1,19 +1,16 @@
 /* eslint-disable react/prop-types */
-import image from '../../assets/user.png'; // Importe sua imagem aqui
-import styles from './style.module.css'; // Importando os estilos do módulo CSS
+import React from 'react';
 import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
-
-function Card({ id ,numStars , categoria , nome,numComments }) {
-  // Função para renderizar as estrelas com base no número recebido via props
+import styles from './style.module.css';
+import image from '../../assets/user.png'; // Importe sua imagem aqui
+function Card({ trabalho , numStars , totalStars }) {
   const navigate = useNavigate();
 
-  const navigateTo = (path, navigate) => {
+  const navigateTo = (path) => {
     navigate(path);
   };
 
-  
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -26,20 +23,21 @@ function Card({ id ,numStars , categoria , nome,numComments }) {
     return stars;
   };
 
-  
   function handleClick() {
-    navigateTo(`/job/${id}`, navigate);
+    navigateTo(`/job/${trabalho.id}`);
   }
 
   return (
     <div className={styles.card}>
-      <img src={image} alt="Foto" />
-      <div className={styles.info}>
-        <h3>{nome}</h3>
-        <p>{categoria}</p>
-        <div>{renderStars()}</div> {/* Renderizando as estrelas */}
-        <div><FaRegComment />  {numComments? numComments: 0}</div>
-        <div>Pirapora - MG</div>
+      {trabalho.usuario.photoUrl? <img src={trabalho.usuario.photoUrl} alt="Foto" />: <img src={image} alt="Foto" />}
+       <div className={styles.info}>
+        <h3>{trabalho.titulo}</h3>
+        <p>{trabalho.servico.NomeServico}</p>
+        <div>{trabalho.usuario.nome}</div>
+        <div>{renderStars()}  ({totalStars})</div>
+        <div><FaRegComment /> {trabalho.numComments ? trabalho.numComments : 0}</div>
+        <div>{trabalho.localizacao}</div>
+        <div>R$ {trabalho.valorHora}/h</div>
       </div>
       <button onClick={handleClick}>Saiba Mais</button>
     </div>

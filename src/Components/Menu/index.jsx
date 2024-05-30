@@ -14,10 +14,10 @@ function Menu() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <NavLink className="nav-link text-light" activeClassName="active" exact to="/">Home</NavLink>
+              <NavLink className="nav-link text-light" to="/">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link text-light" activeClassName="active" to="/jobs">Jobs</NavLink>
+              <NavLink className="nav-link text-light"  to="/jobs">Jobs</NavLink>
             </li>
           </ul>
           <BarraFuncao/>

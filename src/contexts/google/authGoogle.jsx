@@ -2,7 +2,7 @@ import  { createContext, useEffect, useState } from 'react'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from '../../services/firebase';
 const provider = new GoogleAuthProvider();
-import {Navigate} from 'react-router-dom'
+import {Navigate, useNavigate} from 'react-router-dom'
 
 export const AuthGoogleContext = createContext({})
 
@@ -10,8 +10,9 @@ export const AuthGoogleContext = createContext({})
 export const AuthGoogleProvider = ({children})=> {
 
 const [user,setUser]= useState(null);
+const [token , setToken]= useState(null)
 const auth = getAuth(app);
-
+const navigate = useNavigate();
 useEffect(()=>{
     const loadStorageAuth =()=>{
         const sessionToken = sessionStorage.getItem('@Authfirebase:token');
@@ -28,14 +29,15 @@ useEffect(()=>{
         signInWithPopup(auth, provider)
           .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
+           
+           
             // The signed-in user info.
             const user = result.user;
+            const token = user.accessToken;
             setUser(user);
-
+            setToken(user.accessToken)
             console.log(user);
-            console.log(token);
+            console.log(user.accessToken);
 
             sessionStorage.setItem("@Authfirebase:token",token);
             sessionStorage.setItem("@Authfirebase:user",JSON.stringify(user));
@@ -57,7 +59,7 @@ useEffect(()=>{
 function SignOut(){
     sessionStorage.clear();
     setUser(null);
-    return <Navigate to='/jobs'/>
+    return navigate('/')
 }
           return (
             <AuthGoogleContext.Provider value={{signingoogle, user, signed: !!user,SignOut}}>
