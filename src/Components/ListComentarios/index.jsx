@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types */
 
+/* eslint-disable react/prop-types */
+
+/* eslint-disable react/prop-types */
+
+import React from 'react';
 
 function ListComentarios({ comentarios }) {
   return (
@@ -9,7 +15,7 @@ function ListComentarios({ comentarios }) {
         <ul className="list-group w-100 list-group-flush">
           {comentarios.map((comentario, index) => (
             <li key={index} className="list-group-item ">
-              {comentario.user} : {comentario.comentario}
+              {comentario.user?.nome ? comentario.user.nome : 'Usuário desconhecido'}: {comentario.comentario}
             </li>
           ))}
         </ul>
@@ -21,3 +27,4 @@ function ListComentarios({ comentarios }) {
 }
 
 export default ListComentarios;
+

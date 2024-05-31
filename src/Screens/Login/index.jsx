@@ -17,7 +17,7 @@ console.log(signed)
   if(!signed){
     return (
     <>
-    <h1>Login</h1>
+   
 
     <main className='container d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
       <div className="card text-center border border-dark rounded p-3 " style={{ width: '400px' }}>
