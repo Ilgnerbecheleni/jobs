@@ -28,7 +28,7 @@ function Job() {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
         setTrabalho(trabalhoData);
-      
+      console.log(id)
         
         if (trabalhoData.usuario && trabalhoData.usuario.id) {
           const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
@@ -39,6 +39,7 @@ function Job() {
         const comentariosResponse = await api.get(`/comentarios/trabalho/${id}`);
         setComentarios(comentariosResponse.data);
       } catch (err) {
+        console.log(err)
         setError(err);
       } finally {
         setLoading(false);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function CadastroJob() {
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -10,7 +11,7 @@ function CadastroJob() {
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
   const [valorHora, setValorHora] = useState('');
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchCategorias();
   }, []);
@@ -44,6 +45,7 @@ function CadastroJob() {
       setLocalidade('');
       setCategoriaSelecionada('');
       setValorHora('');
+      navigate('/jobs');
     } catch (error) {
       console.error('Erro ao cadastrar job:', error);
     }
