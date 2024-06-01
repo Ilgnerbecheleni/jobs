@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ListCards from '../../Components/ListCard'
 
 function Jobs() {
+
+
+
+
+
   return (
     <div className='container'>
-    <ListCards/>
+    <ListCards />
     </div>
   )
 }

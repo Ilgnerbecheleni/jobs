@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useId, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
 import styles from './style.module.css';
@@ -16,9 +16,10 @@ function Job() {
   const [error, setError] = useState(null);
   const [stars, setStars] = useState(0);
   const [totalstars, setTotalStars] = useState(0);
-  const { user } = useContext(AuthGoogleContext);
+  const {  user} = useContext(AuthGoogleContext);
   const [userId, setUserId] = useState(null);
-  const [sub , setSub]=useState();
+  const [teste,setTeste]= useState("teste")
+  const [uid , setUid]=useState();
   const [showConfirm, setShowConfirm] = useState(false);
   const [comentarios, setComentarios] = useState([]);
 
@@ -28,7 +29,9 @@ function Job() {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
         setTrabalho(trabalhoData);
-      console.log(id)
+       setUserId(trabalhoData.usuarioSub);
+   
+
         
         if (trabalhoData.usuario && trabalhoData.usuario.id) {
           const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
@@ -38,6 +41,7 @@ function Job() {
 
         const comentariosResponse = await api.get(`/comentarios/trabalho/${id}`);
         setComentarios(comentariosResponse.data);
+        console.log(comentariosResponse.data)
       } catch (err) {
         console.log(err)
         setError(err);
@@ -46,9 +50,38 @@ function Job() {
       }
     };
 
+    function getUidFromSessionStorage() {
+      return new Promise((resolve, reject) => {
+        try {
+          const uid = sessionStorage.getItem('@Authfirebase:uid');
+          
+          resolve(uid);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+    
+    // Usando a função para obter o UID e definir no estado
+    async function fetchUidAndSetState() {
+      try {
+        const uid = await getUidFromSessionStorage();
+        setUid(uid.replace(/^"|"$/g, ''));
+   //     console.log(uid);
+   
+      } catch (error) {
+        console.error('Ocorreu um erro ao obter o UID:', error);
+      }
+    }
+
+
+    fetchUidAndSetState()
+
+
     fetchData();
-    setUserId(user.uid);
+   
   }, [id, user.uid]);
+
 
   const renderStars = (numStars) => {
     const stars = [];
@@ -64,7 +97,9 @@ function Job() {
 
   const handleDelete = async () => {
     try {
+      console.log(id)
       await api.delete(`/trabalhos/${id}`);
+      
       navigate('/jobs');
     } catch (error) {
       console.error('Erro ao deletar job:', error);
@@ -106,7 +141,7 @@ function Job() {
           <div>Telefone: {trabalho.telefone}</div>
           <div><FaRegComment /> {trabalho.numComments ? trabalho.numComments : 0}</div>
           <div>{trabalho.localizacao}</div>
-          {trabalho.usuario.sub === userId && (
+          {userId === uid && (
             <div className='mt-3 w-75 d-flex justify-content-around'>
               <Link to={`/job/editar/${id}`} className="btn btn-primary">Editar Trabalho</Link>
               <button className="btn btn-danger" onClick={() => setShowConfirm(true)}>Excluir</button>
@@ -117,7 +152,7 @@ function Job() {
       <section className={styles.listcomentarios}>
         <CommentForm 
           trabalhoId={id} 
-          userSub={trabalho.usuarioSub} 
+          userSub={userId} 
           onCommentPosted={handleCommentPosted} 
         />
         <ListComentarios comentarios={comentarios} />

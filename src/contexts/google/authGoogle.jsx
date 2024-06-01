@@ -11,6 +11,7 @@ export const AuthGoogleProvider = ({children})=> {
 
 const [user,setUser]= useState(null);
 const [token , setToken]= useState(null)
+const [uid , setUid]= useState(null)
 const auth = getAuth(app);
 const navigate = useNavigate();
 useEffect(()=>{
@@ -34,13 +35,17 @@ useEffect(()=>{
             // The signed-in user info.
             const user = result.user;
             const token = user.accessToken;
+            const uid = user.uid;
             setUser(user);
             setToken(user.accessToken)
-            console.log(user);
+            setUid(user.uid)
             console.log(user.accessToken);
+            console.log(user);
+            console.log(user.uid);
 
             sessionStorage.setItem("@Authfirebase:token",token);
             sessionStorage.setItem("@Authfirebase:user",JSON.stringify(user));
+            sessionStorage.setItem("@Authfirebase:uid",JSON.stringify(uid));
         
             // IdP data available using getAdditionalUserInfo(result)
             // ...
@@ -62,7 +67,7 @@ function SignOut(){
     return navigate('/')
 }
           return (
-            <AuthGoogleContext.Provider value={{signingoogle, user, signed: !!user,SignOut}}>
+            <AuthGoogleContext.Provider value={{signingoogle, user, signed: !!user,SignOut,uid}}>
               {children}
             </AuthGoogleContext.Provider>
           )

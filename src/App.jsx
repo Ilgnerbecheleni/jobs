@@ -10,10 +10,10 @@ function App() {
   return (
     <>
   
-    <AuthGoogleProvider>
+  
     <Menu/>
     <Rotas/>
-    </AuthGoogleProvider>
+
     
 
     

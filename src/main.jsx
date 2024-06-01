@@ -5,11 +5,14 @@ import './index.css'
 import 'bootstrap/dist/js/bootstrap.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import { BrowserRouter } from 'react-router-dom'
+import { AuthGoogleProvider } from './contexts/google/authGoogle.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
         <BrowserRouter>
+        <AuthGoogleProvider>
         <App />
+        </AuthGoogleProvider>
         </BrowserRouter>
     
   </React.StrictMode>,
