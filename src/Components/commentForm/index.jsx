@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import api from '../../services/api';
 
-function CommentForm({ trabalhoId,  userSub, onCommentPosted }) {
+function CommentForm({ trabalhoId, userSub, onCommentPosted }) {
   const [comentario, setComentario] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,12 +11,12 @@ function CommentForm({ trabalhoId,  userSub, onCommentPosted }) {
     setLoading(true);
     try {
       await api.post('/comentarios', {
-       comentario: comentario,
-       trabalhoId: trabalhoId,
-       userSub: userSub,
+        comentario: comentario,
+        trabalhoId: trabalhoId,
+        userSub: userSub,
       });
       setComentario('');
-      onCommentPosted();
+      onCommentPosted(); // Chame a função de callback
     } catch (error) {
       setError(error.response?.data?.message || 'Erro ao postar comentário');
     } finally {
