@@ -97,14 +97,13 @@ function Job() {
 
   const handleDelete = async () => {
     try {
-      console.log(id)
-      await api.delete(`/trabalhos/${id}`);
-      
+      await api.delete(`/trabalhos/${id}`, { data: { sub: uid } });
       navigate('/jobs');
     } catch (error) {
       console.error('Erro ao deletar job:', error);
     }
   };
+  
 
   const handleCommentPosted = async () => {
     try {
