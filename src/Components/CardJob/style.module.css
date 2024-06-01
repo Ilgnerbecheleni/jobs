@@ -1,6 +1,6 @@
 .cardjob {
   width: 200px;
-  height: 250px;
+  height: 290px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -21,7 +21,7 @@
     .cardjob{
        width: 130px;
        height: 150px;
- 
+ font-size: 1em;
     }
   }
   

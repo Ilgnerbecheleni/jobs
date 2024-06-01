@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Card from "../Card";
 import api from "../../services/api";
 
@@ -10,19 +8,11 @@ function ListCards() {
   const [error, setError] = useState(null);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+  const [trabalhosFiltrados, setTrabalhosFiltrados] = useState([]);
 
   useEffect(() => {
     fetchCategorias();
   }, []);
-
-  const fetchCategorias = async () => {
-    try {
-      const response = await api.get("categorias");
-      setCategorias(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar categorias:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchTrabalhos = async () => {
@@ -60,6 +50,7 @@ function ListCards() {
         );
 
         setTrabalhos(trabalhosWithRatings);
+        setTrabalhosFiltrados(trabalhosWithRatings); // Inicialmente, trabalhosFiltrados contém todos os trabalhos
       } catch (err) {
         setError(err);
       } finally {
@@ -70,19 +61,30 @@ function ListCards() {
     fetchTrabalhos();
   }, []);
 
-  const handleCategoriaChange = (event) => {
-    setCategoriaSelecionada(event.target.value);
+  useEffect(() => {
+    // Quando a categoria selecionada muda, filtramos os trabalhos correspondentes
+    if (categoriaSelecionada) {
+      const trabalhosFiltrados = trabalhos.filter((trabalho) => {
+        return trabalho.servico.NomeServico === categoriaSelecionada;
+      });
+      setTrabalhosFiltrados(trabalhosFiltrados);
+    } else {
+      // Se nenhuma categoria estiver selecionada, mostramos todos os trabalhos
+      setTrabalhosFiltrados(trabalhos);
+    }
+  }, [categoriaSelecionada, trabalhos]);
+
+  const fetchCategorias = async () => {
+    try {
+      const response = await api.get("categorias");
+      setCategorias(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+    }
   };
 
-  const handleFiltrarSubmit = (event) => {
-    event.preventDefault();
-
-    // Lógica de filtragem dos trabalhos com base na categoria selecionada
-    const trabalhosFiltrados = trabalhos.filter((trabalho) => {
-      return trabalho.servico.NomeServico === categoriaSelecionada;
-    });
-
-    setTrabalhos(trabalhosFiltrados);
+  const handleCategoriaChange = (event) => {
+    setCategoriaSelecionada(event.target.value);
   };
 
   if (loading) {
@@ -97,7 +99,7 @@ function ListCards() {
     <div>
       <nav className="navbar bg-body-tertiary mb-5 mt-5">
         <div className="container-fluid">
-          <form className="d-flex" role="search" onSubmit={handleFiltrarSubmit}>
+          <form className="d-flex" role="search">
             <select
               className="form-select me-2"
               aria-label="Select"
@@ -106,19 +108,16 @@ function ListCards() {
             >
               <option value="">Selecione uma opção</option>
               {categorias.map((categoria, index) => (
-                <option key={index} value={categoria}>
+                <option key={index} value={categoria.NomeServico}>
                   {categoria.NomeServico}
                 </option>
               ))}
             </select>
-            <button className="btn btn-outline-success" type="submit">
-              Filtrar
-            </button>
           </form>
         </div>
       </nav>
-      <ul className="list-group list-group-flush">
-        {trabalhos.map((trabalho) => (
+      <ul className="list-group ">
+        {trabalhosFiltrados.map((trabalho) => (
           <li key={trabalho.id} className="list-group-item">
             <Card
               trabalho={trabalho}
