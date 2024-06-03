@@ -31,7 +31,7 @@ function Card({ trabalho , numStars , totalStars }) {
     <div className={styles.card}>
       {trabalho.usuario.photoUrl? <img src={trabalho.usuario.photoUrl} alt="Foto" />: <img src={image} alt="Foto" />}
        <div className={styles.info}>
-        <h3>{trabalho.titulo}</h3>
+        <h5>{trabalho.titulo}</h5>
         <p>{trabalho.servico.NomeServico}</p>
         <div>{trabalho.usuario.nome}</div>
         <div>{renderStars()}  ({totalStars})</div>

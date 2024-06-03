@@ -151,7 +151,7 @@ function Job() {
       <section className={styles.listcomentarios}>
         <CommentForm 
           trabalhoId={id} 
-          userSub={userId} 
+          userSub={uid} 
           onCommentPosted={handleCommentPosted} 
         />
         <ListComentarios comentarios={comentarios} />

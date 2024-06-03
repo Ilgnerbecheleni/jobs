@@ -18,6 +18,7 @@
 
 .card .info {
   flex-grow: 1; /* Permitir que o texto ocupe o espaço restante */
+  padding: 20px;
 }
 
 
@@ -51,6 +52,7 @@
     align-items: flex-start; /* Alinhar os elementos à esquerda */
     height: auto; /* Altura automática */
     padding: 20px; /* Adicionar espaço interno */
+ 
   }
   
   .card img {
@@ -62,6 +64,11 @@
   .card .info {
     width: 100%; /* Garantir que o texto ocupe toda a largura */
     text-align: center; /* Centralizar o texto na horizontal */
+  }
+
+  h5{
+    font-size: 0.5em;
+    width: 100%;
   }
 
   .card button {

@@ -97,7 +97,7 @@ function ListCards() {
 
   return (
     <div>
-      <nav className="navbar bg-body-tertiary mb-5 mt-5">
+      <nav className="navbar bg-body-tertiary mb-5 mt-5 container">
         <div className="container-fluid">
           <form className="d-flex" role="search">
             <select

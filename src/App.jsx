@@ -12,7 +12,10 @@ function App() {
   
   
     <Menu/>
-    <Rotas/>
+  <main className='container'>
+  <Rotas/>
+  </main>
+    
 
     
 
