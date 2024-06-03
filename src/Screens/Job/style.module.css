@@ -112,6 +112,58 @@
   display: flex;
   justify-content: space-around;
 }
+/* Adicione isso ao seu arquivo CSS (style.module.css) */
+
+.starRating {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  width: 200px;
+
+}
+
+.filledStar {
+  color: gold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.emptyStar {
+  color: lightgray;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.filledStar:hover,
+.emptyStar:hover {
+  transform: scale(1.2);
+}
+
+.confirmModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.confirmModalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.alignbuttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
 
 
   /* Adaptação para dispositivos móveis */
@@ -119,12 +171,16 @@
   
     .card {
       width: 95vw;
+      align-items: center;
+      justify-content: center;
+      padding-left: 30px;
     }
 
     .card img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 10px 10px 0 0;
+      margin-left: 8px;
     }
 
    }

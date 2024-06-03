@@ -1,6 +1,7 @@
 import  { useEffect, useState } from "react";
 import Card from "../Card";
 import api from "../../services/api";
+import { Alert, Spinner } from "react-bootstrap";
 
 function ListCards() {
   const [trabalhos, setTrabalhos] = useState([]);
@@ -19,7 +20,7 @@ function ListCards() {
       try {
         const response = await api.get("/trabalhos");
         const trabalhosData = response.data;
-        console.table(response.data);
+        //console.table(response.data);
 
         // Fetching evaluations for each trabalho
         const trabalhosWithRatings = await Promise.all(
@@ -61,6 +62,8 @@ function ListCards() {
     fetchTrabalhos();
   }, []);
 
+
+
   useEffect(() => {
     // Quando a categoria selecionada muda, filtramos os trabalhos correspondentes
     if (categoriaSelecionada) {
@@ -86,18 +89,32 @@ function ListCards() {
   const handleCategoriaChange = (event) => {
     setCategoriaSelecionada(event.target.value);
   };
-
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Alert variant="danger">
+          Error: {error.message}
+        </Alert>
+      </div>
+    );
   }
 
+  if (!trabalhos) {
+    return <div>No data found</div>;
+  }
   return (
-    <div>
-      <nav className="navbar bg-body-tertiary mb-5 mt-5 container">
+    <div className="container">
+      <nav className="navbar bg-body-tertiary mb-5 mt-5 ">
         <div className="container-fluid">
           <form className="d-flex" role="search">
             <select
@@ -120,6 +137,7 @@ function ListCards() {
         {trabalhosFiltrados.map((trabalho) => (
           <li key={trabalho.id} className="list-group-item">
             <Card
+               id = {trabalho.id}
               trabalho={trabalho}
               numStars={trabalho.mediaAvaliacoes || 0}
               totalStars={trabalho.totalAvaliacoes || 0}

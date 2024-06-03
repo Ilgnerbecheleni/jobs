@@ -1,27 +1,28 @@
-import React, { useContext, useEffect, useId, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
 import styles from './style.module.css';
 import image from '../../assets/user.png';
 import ListComentarios from '../../Components/ListComentarios';
-import CommentForm from '../../Components/commentForm'; // Importar o novo componente
+import CommentForm from '../../Components/commentForm';
 import api from '../../services/api';
 import { AuthGoogleContext } from '../../contexts/google/authGoogle';
 
 function Job() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(AuthGoogleContext);
+
   const [trabalho, setTrabalho] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stars, setStars] = useState(0);
-  const [totalstars, setTotalStars] = useState(0);
-  const {  user} = useContext(AuthGoogleContext);
-  const [userId, setUserId] = useState(null);
-  const [teste,setTeste]= useState("teste")
-  const [uid , setUid]=useState();
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [totalStars, setTotalStars] = useState(0);
+  const [numComments, setNumComments] = useState(0);
   const [comentarios, setComentarios] = useState([]);
+  const [uid, setUid] = useState('');
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,68 +30,49 @@ function Job() {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
         setTrabalho(trabalhoData);
-       setUserId(trabalhoData.usuarioSub);
-   
 
-        
-        if (trabalhoData.usuario && trabalhoData.usuario.id) {
-          const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
-          setStars(avaliacoesResponse.data.mediaAvaliacoes);
-          setTotalStars(avaliacoesResponse.data.totalAvaliacoes);
-        }
+        const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
+        setStars(avaliacoesResponse.data.mediaAvaliacoes);
+        setTotalStars(avaliacoesResponse.data.totalAvaliacoes);
 
         const comentariosResponse = await api.get(`/comentarios/trabalho/${id}`);
         setComentarios(comentariosResponse.data);
-        console.log(comentariosResponse.data)
+        setNumComments(comentariosResponse.data.length);
       } catch (err) {
-        console.log(err)
         setError(err);
       } finally {
         setLoading(false);
       }
     };
 
-    function getUidFromSessionStorage() {
+    const getUidFromSessionStorage = () => {
       return new Promise((resolve, reject) => {
         try {
           const uid = sessionStorage.getItem('@Authfirebase:uid');
-          
-          resolve(uid);
+          resolve(uid ? uid.replace(/^"|"$/g, '') : '');
         } catch (error) {
           reject(error);
         }
       });
-    }
-    
-    // Usando a função para obter o UID e definir no estado
+    };
+
     async function fetchUidAndSetState() {
       try {
         const uid = await getUidFromSessionStorage();
-        setUid(uid.replace(/^"|"$/g, ''));
-   //     console.log(uid);
-   
+        setUid(uid);
       } catch (error) {
         console.error('Ocorreu um erro ao obter o UID:', error);
       }
     }
 
-
-    fetchUidAndSetState()
-
-
+    fetchUidAndSetState();
     fetchData();
-   
-  }, [id, user.uid]);
-
+  }, [id]);
 
   const renderStars = (numStars) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
-      if (i < numStars) {
-        stars.push(<FaStar key={i} />);
-      } else {
-        stars.push(<FaRegStar key={i} />);
-      }
+      stars.push(i < numStars ? <FaStar key={i} /> : <FaRegStar key={i} />);
     }
     return stars;
   };
@@ -103,14 +85,27 @@ function Job() {
       console.error('Erro ao deletar job:', error);
     }
   };
-  
 
   const handleCommentPosted = async () => {
     try {
       const comentariosResponse = await api.get(`/comentarios/trabalho/${id}`);
       setComentarios(comentariosResponse.data);
+      setNumComments(comentariosResponse.data.length);
     } catch (error) {
       console.error('Erro ao atualizar comentários:', error);
+    }
+  };
+
+  const handleStarClick = async (rating) => {
+    try {
+      await api.post(`/avaliacao/${trabalho.usuario.id}`, {
+        classificacao: rating,
+      });
+      const avaliacoesResponse = await api.get(`/avaliacao/${trabalho.usuario.id}`);
+      setStars(avaliacoesResponse.data.mediaAvaliacoes);
+      setTotalStars(avaliacoesResponse.data.totalAvaliacoes);
+    } catch (error) {
+      console.error('Erro ao enviar avaliação:', error);
     }
   };
 
@@ -127,35 +122,52 @@ function Job() {
   }
 
   return (
-    <div className={styles.jobDetails}>
+    <div className={`container ${styles.jobDetails}`}>
       <div className={styles.backButton}>
         <Link to="/jobs">Voltar</Link>
       </div>
       <div className={styles.card}>
-        {trabalho.usuario.photoUrl ? <img src={trabalho.usuario.photoUrl} alt="Foto" /> : <img src={image} alt="Foto" />}
+        {trabalho.usuario.photoUrl ? (
+          <img src={trabalho.usuario.photoUrl} alt="Foto" />
+        ) : (
+          <img src={image} alt="Foto" />
+        )}
         <div className={styles.info}>
           <h3>{trabalho.usuario.nome}</h3>
           <p>{trabalho.servico.NomeServico}</p>
-          <div>{renderStars(stars)} ({totalstars})</div>
-          <div>Telefone: {trabalho.telefone}</div>
-          <div><FaRegComment /> {trabalho.numComments ? trabalho.numComments : 0}</div>
+          <div>
+            {renderStars(stars)} ({totalStars})
+          </div>
+          <div>
+            <FaRegComment /> {numComments}
+          </div>
           <div>{trabalho.localizacao}</div>
-          {userId === uid && (
-            <div className='mt-3 w-75 d-flex justify-content-around'>
+          <div>R$ {trabalho.valorHora}/h</div>
+          {trabalho.usuario.id === uid && (
+            <div className="mt-3 w-75 d-flex justify-content-around">
               <Link to={`/job/editar/${id}`} className="btn btn-primary">Editar Trabalho</Link>
               <button className="btn btn-danger" onClick={() => setShowConfirm(true)}>Excluir</button>
             </div>
           )}
         </div>
       </div>
+      <h5 className='text-black-50 mt-3'>Avalie o Profissional</h5>
+      <div className={styles.starRating}>
+   
+        {[1, 2, 3, 4, 5].map((rating) => (
+          <FaStar
+            key={rating}
+            size={28}
+            className={rating <= stars ? styles.filledStar : styles.emptyStar}
+            onClick={() => handleStarClick(rating)}
+          />
+        ))}
+      </div>
       <section className={styles.listcomentarios}>
-        <CommentForm 
-          trabalhoId={id} 
-          userSub={uid} 
-          onCommentPosted={handleCommentPosted} 
-        />
+        <CommentForm trabalhoId={id} userSub={uid} onCommentPosted={handleCommentPosted} />
         <ListComentarios comentarios={comentarios} />
       </section>
+
       {showConfirm && (
         <div className={styles.confirmModal}>
           <div className={styles.confirmModalContent}>
