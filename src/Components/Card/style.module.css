@@ -22,8 +22,9 @@
 }
 
 
-.card h3 {
-  margin: 0 0 10px; /* Espaçamento inferior entre o nome e o tipo de serviço */
+.card h5{
+  margin: 20px 0px; /* Espaçamento inferior entre o nome e o tipo de serviço */
+
 }
 
 .card p {
