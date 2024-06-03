@@ -113,7 +113,7 @@ function ListCards() {
     return <div>No data found</div>;
   }
   return (
-    <div className="container">
+    <div >
       <nav className="navbar bg-body-tertiary mb-5 mt-5 ">
         <div className="container-fluid">
           <form className="d-flex" role="search">
