@@ -30,7 +30,7 @@ function Job() {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
         setTrabalho(trabalhoData);
-
+console.log(trabalhoData)
         const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
         setStars(avaliacoesResponse.data.mediaAvaliacoes);
         setTotalStars(avaliacoesResponse.data.totalAvaliacoes);
@@ -143,7 +143,7 @@ function Job() {
           </div>
           <div>{trabalho.localizacao}</div>
           <div>R$ {trabalho.valorHora}/h</div>
-          {trabalho.usuario.id === uid && (
+          {trabalho.usuario.sub === uid && (
             <div className="mt-3 w-75 d-flex justify-content-around">
               <Link to={`/job/editar/${id}`} className="btn btn-primary">Editar Trabalho</Link>
               <button className="btn btn-danger" onClick={() => setShowConfirm(true)}>Excluir</button>
