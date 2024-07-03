@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaRegComment, FaUserEdit } from 'react-icons/fa';
 import styles from './style.module.css';
 import image from '../../assets/user.png';
 import ListComentarios from '../../Components/ListComentarios';
 import CommentForm from '../../Components/commentForm';
 import api from '../../services/api';
 import { AuthGoogleContext } from '../../contexts/google/authGoogle';
+import { AiFillDelete } from 'react-icons/ai';
 
 function Job() {
   const { id } = useParams();
@@ -136,6 +137,7 @@ console.log(trabalhoData)
         <div className={styles.info}>
           <h3>{trabalho.usuario.nome}</h3>
           <p>{trabalho.servico.NomeServico}</p>
+          <p className={styles.descricaoStyle}>{trabalho.descricao}</p>
           <div>
             {renderStars(stars)} ({totalStars})
           </div>
@@ -145,10 +147,11 @@ console.log(trabalhoData)
           <div>{trabalho.localizacao}</div>
           <div>Contato: {trabalho.telefone?trabalho.telefone:"sem contato"}</div>
           <div>R$ {trabalho.valorHora}/h</div>
+          
           {trabalho.usuario.sub === uid && (
-            <div className="mt-3 w-75 d-flex justify-content-around">
-              <Link to={`/job/editar/${id}`} className="btn btn-primary">Editar Trabalho</Link>
-              <button className="btn btn-danger" onClick={() => setShowConfirm(true)}>Excluir</button>
+            <div className="mt-3 w-75 d-flex justify-content-center gap-5">
+              <Link to={`/job/editar/${id}`} className="btn btn-primary"><FaUserEdit size={22}/></Link>
+              <button className="btn btn-danger" onClick={() => setShowConfirm(true)}><AiFillDelete size={22} /></button>
             </div>
           )}
         

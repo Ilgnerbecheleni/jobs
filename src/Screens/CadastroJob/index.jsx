@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import api from '../../services/api';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 function CadastroJob() {
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -11,7 +12,9 @@ function CadastroJob() {
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
   const [valorHora, setValorHora] = useState('');
+  const [descricao, setDescricao] = useState(''); // Novo estado para descrição
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchCategorias();
   }, []);
@@ -35,7 +38,8 @@ function CadastroJob() {
           telefone,
           localizacao: localidade,
           valorHora: parseFloat(valorHora), // Convertendo para float
-          servicoId: categoriaSelecionada
+          servicoId: categoriaSelecionada,
+          descricao // Incluindo a descrição no objeto enviado
         }
       );
       console.log('Resposta da API:', response.data);
@@ -45,6 +49,7 @@ function CadastroJob() {
       setLocalidade('');
       setCategoriaSelecionada('');
       setValorHora('');
+      setDescricao(''); // Resetando o estado da descrição
       navigate('/jobs');
     } catch (error) {
       console.error('Erro ao cadastrar job:', error);
@@ -110,6 +115,10 @@ function CadastroJob() {
               <option key={categoria.id} value={categoria.id}>{categoria.NomeServico}</option>
             ))}
           </select>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="descricao" className="form-label">Descrição (Opcional)</label>
+          <textarea className="form-control" id="descricao" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
         </div>
         <button type="submit" className="btn btn-primary">Cadastrar Job</button>
       </form>

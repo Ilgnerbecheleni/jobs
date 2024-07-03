@@ -165,6 +165,13 @@
   margin-top: 10px;
 }
 
+.descricaoStyle
+  {
+    white-space: pre-wrap;  /* Preserva espaços em branco e quebras de linha */
+    word-wrap: break-word;  /* Quebra a linha quando o texto ultrapassar os limites do contêiner */
+  }
+
+
 
   /* Adaptação para dispositivos móveis */
   @media (max-width: 768px) {
