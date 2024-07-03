@@ -29,6 +29,7 @@ function Job() {
       try {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
+        console.log(trabalhoData)
         setTrabalho(trabalhoData);
 console.log(trabalhoData)
         const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
@@ -142,6 +143,7 @@ console.log(trabalhoData)
             <FaRegComment /> {numComments}
           </div>
           <div>{trabalho.localizacao}</div>
+          <div>Contato: {trabalho.telefone?trabalho.telefone:"sem contato"}</div>
           <div>R$ {trabalho.valorHora}/h</div>
           {trabalho.usuario.sub === uid && (
             <div className="mt-3 w-75 d-flex justify-content-around">
@@ -149,7 +151,9 @@ console.log(trabalhoData)
               <button className="btn btn-danger" onClick={() => setShowConfirm(true)}>Excluir</button>
             </div>
           )}
+        
         </div>
+     
       </div>
       <h5 className='text-black-50 mt-3'>Avalie o Profissional</h5>
       <div className={styles.starRating}>
