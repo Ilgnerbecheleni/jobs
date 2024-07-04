@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://191.101.234.241:3000', // A base URL da sua API
- //  baseURL: 'http://localhost:3000'
+  //baseURL: 'http://191.101.234.241:3000', // A base URL da sua API
+   baseURL: 'https://jobsconnect.com.br:3000'
 });
 
 api.interceptors.request.use(

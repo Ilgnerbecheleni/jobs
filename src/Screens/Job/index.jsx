@@ -7,13 +7,13 @@ import image from '../../assets/user.png';
 import ListComentarios from '../../Components/ListComentarios';
 import CommentForm from '../../Components/commentForm';
 import api from '../../services/api';
-import { AuthGoogleContext } from '../../contexts/google/authGoogle';
+
 import { AiFillDelete } from 'react-icons/ai';
 
 function Job() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useContext(AuthGoogleContext);
+  
 
   const [trabalho, setTrabalho] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,9 +30,9 @@ function Job() {
       try {
         const trabalhoResponse = await api.get(`/trabalhos/${id}`);
         const trabalhoData = trabalhoResponse.data;
-        console.log(trabalhoData)
+        // console.log(trabalhoData)
         setTrabalho(trabalhoData);
-console.log(trabalhoData)
+
         const avaliacoesResponse = await api.get(`/avaliacao/${trabalhoData.usuario.id}`);
         setStars(avaliacoesResponse.data.mediaAvaliacoes);
         setTotalStars(avaliacoesResponse.data.totalAvaliacoes);

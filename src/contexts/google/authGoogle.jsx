@@ -39,9 +39,9 @@ useEffect(()=>{
             setUser(user);
             setToken(user.accessToken)
             setUid(user.uid)
-            console.log(user.accessToken);
-            console.log(user);
-            console.log(user.uid);
+            // console.log(user.accessToken);
+            // console.log(user);
+            // console.log(user.uid);
 
             sessionStorage.setItem("@Authfirebase:token",token);
             sessionStorage.setItem("@Authfirebase:user",JSON.stringify(user));
