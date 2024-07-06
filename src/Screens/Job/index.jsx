@@ -147,7 +147,7 @@ function Job() {
           <div>{trabalho.localizacao}</div>
           <div className='d-flex align-align-items-center h-50'>
   Contato: {trabalho.telefone ? (
-    <span className='pb-1'>
+    <span className=''>
       {trabalho.telefone}{' '}
       <a
         className="whatsapp-link"
@@ -155,7 +155,7 @@ function Job() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FaWhatsapp size={22} color='green'/>
+        <FaWhatsapp size={26} color='green' className='pb-1'/>
       </a>
     </span>
   ) : (
