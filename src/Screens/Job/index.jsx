@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegComment, FaUserEdit } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaRegComment, FaUserEdit, FaWhatsapp } from 'react-icons/fa';
 import styles from './style.module.css';
 import image from '../../assets/user.png';
 import ListComentarios from '../../Components/ListComentarios';
@@ -145,7 +145,23 @@ function Job() {
             <FaRegComment /> {numComments}
           </div>
           <div>{trabalho.localizacao}</div>
-          <div>Contato: {trabalho.telefone?trabalho.telefone:"sem contato"}</div>
+          <div>
+  Contato: {trabalho.telefone ? (
+    <span>
+      {trabalho.telefone}{' '}
+      <a
+        className="whatsapp-link"
+        href={`https://api.watsapp.com/send?phone=${trabalho.telefone}&text= Olá ${trabalho.usuario.nome.split(' ')[0]} ,Gostei do seu perfil profissional, poderia me passar informações`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <FaWhatsapp />
+      </a>
+    </span>
+  ) : (
+    "sem contato"
+  )}
+</div>
           <div>R$ {trabalho.valorHora}/h</div>
           
           {trabalho.usuario.sub === uid && (
