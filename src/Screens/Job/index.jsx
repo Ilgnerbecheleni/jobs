@@ -145,17 +145,17 @@ function Job() {
             <FaRegComment /> {numComments}
           </div>
           <div>{trabalho.localizacao}</div>
-          <div>
+          <div className='d-flex align-align-items-center h-50'>
   Contato: {trabalho.telefone ? (
-    <span>
+    <span className='pb-1'>
       {trabalho.telefone}{' '}
       <a
         className="whatsapp-link"
-        href={`https://api.watsapp.com/send?phone=${trabalho.telefone}&text= Olá ${trabalho.usuario.nome.split(' ')[0]} ,Gostei do seu perfil profissional, poderia me passar informações`}
+        href={`http://api.whatsapp.com/send?1=pt_BR&phone=${trabalho.telefone}&text= Olá ${trabalho.usuario.nome.split(' ')[0]} ,Gostei do seu perfil profissional, poderia me passar informações?`}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FaWhatsapp />
+        <FaWhatsapp size={22} color='green'/>
       </a>
     </span>
   ) : (
