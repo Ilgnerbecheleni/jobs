@@ -100,7 +100,7 @@ function CadastroJob() {
 
   return (
     <section className='container mt-5'>
-        <ToastContainer />
+        <ToastContainer autoClose={3000}/>
       <h3 className='display-4'>Cadastre um Serviço</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
