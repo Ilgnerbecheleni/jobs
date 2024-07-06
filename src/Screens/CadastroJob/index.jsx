@@ -2,6 +2,7 @@ import  { useState, useEffect } from 'react';
 import api from '../../services/api';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 function CadastroJob() {
   const [nome, setNome] = useState('');
@@ -51,10 +52,25 @@ function CadastroJob() {
       setValorHora('');
       setDescricao(''); // Resetando o estado da descrição
       navigate('/jobs');
+      notfySucess();
     } catch (error) {
       console.error('Erro ao cadastrar job:', error);
+      notifyError(error.response.data.erro);
+      
     }
   };
+
+  const notifyError = (erro) => {
+    toast.error(erro, {
+      position: "top-rigth"
+    });
+  }
+
+  const notfySucess = ()=>{
+    toast.success("Usuario cadastrado!!", {
+      position: "top-rigth"
+    });
+  }
 
   const handleCepChange = (event) => {
     const newCep = event.target.value;
@@ -84,6 +100,7 @@ function CadastroJob() {
 
   return (
     <section className='container mt-5'>
+        <ToastContainer />
       <h3 className='display-4'>Cadastre um Serviço</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

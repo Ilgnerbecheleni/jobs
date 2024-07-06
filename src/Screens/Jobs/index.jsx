@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import ListCards from '../../Components/ListCard'
+import ListCards from "../../Components/ListCard";
 
 function Jobs() {
-
-
-
-
-
   return (
-    <div className='container'>
-    <ListCards />
+    <div className="container">
+      <ListCards />
     </div>
-  )
+  );
 }
 
-export default Jobs
+export default Jobs;

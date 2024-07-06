@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
-import { FaStar, FaRegStar, FaRegComment } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import styles from './style.module.css';
-import image from '../../assets/user.png'; // Importe sua imagem aqui
-import api from '../../services/api';
+import { useEffect, useState } from "react";
+import { FaStar, FaRegStar, FaRegComment } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import styles from "./style.module.css";
+import image from "../../assets/user.png"; // Importe sua imagem aqui
+import api from "../../services/api";
 
-function Card({ trabalho, numStars, totalStars,id }) {
+function Card({ trabalho, numStars, totalStars, id }) {
   const navigate = useNavigate();
   const [numComments, setNumComments] = useState(0);
 
@@ -16,7 +16,7 @@ function Card({ trabalho, numStars, totalStars,id }) {
         const response = await api.get(`/comentarios/trabalho/${id}/count`);
         setNumComments(response.data.count);
       } catch (error) {
-        console.error('Erro ao buscar o número de comentários:', error);
+        console.error("Erro ao buscar o número de comentários:", error);
       }
     };
 
@@ -53,7 +53,7 @@ function Card({ trabalho, numStars, totalStars,id }) {
       <div className={styles.info}>
         <h5>{trabalho.titulo}</h5>
         <p>{trabalho.servico.NomeServico}</p>
-        <div>{trabalho.usuario.nome}</div>
+        <div>{trabalho.usuario.nome.split(" ")[0]}</div>
         <div>
           {renderStars()} ({totalStars})
         </div>

@@ -1,7 +1,7 @@
 import  { useEffect, useState } from "react";
 import Card from "../Card";
 import api from "../../services/api";
-import { Alert, Spinner } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 
 function ListCards() {
   const [trabalhos, setTrabalhos] = useState([]);

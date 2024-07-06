@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegComment, FaUserEdit, FaWhatsapp } from 'react-icons/fa';
 import styles from './style.module.css';
