@@ -92,9 +92,9 @@ function ListCards() {
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+     <div className="spinner-border" role="status">
+  <span className="visually-hidden">Loading...</span>
+</div>
       </div>
     );
   }

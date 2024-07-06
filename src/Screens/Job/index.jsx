@@ -11,10 +11,9 @@ import api from '../../services/api';
 import { AiFillDelete } from 'react-icons/ai';
 
 function Job() {
+
   const { id } = useParams();
   const navigate = useNavigate();
-  
-
   const [trabalho, setTrabalho] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
