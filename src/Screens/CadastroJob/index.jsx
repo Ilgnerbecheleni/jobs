@@ -62,7 +62,9 @@ function CadastroJob() {
 
   const notifyError = (erro) => {
     toast.error(erro, {
-      position: "top-rigth"
+      position: "top-right", 
+      autoClose: 2000,
+      pauseOnFocusLoss: false,
     });
   }
 
@@ -100,7 +102,9 @@ function CadastroJob() {
 
   return (
     <section className='container mt-5'>
-        <ToastContainer autoClose={3000}/>
+        
+       <ToastContainer limit={1}/>
+
       <h3 className='display-4'>Cadastre um Serviço</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -139,6 +143,7 @@ function CadastroJob() {
         </div>
         <button type="submit" className="btn btn-primary">Cadastrar Job</button>
       </form>
+     
     </section>
   );
 }
