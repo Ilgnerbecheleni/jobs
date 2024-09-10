@@ -24,6 +24,7 @@ function CadastroJob() {
     try {
       const response = await api.get('/categorias');
       setCategorias(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Erro ao buscar categorias:', error);
     }
