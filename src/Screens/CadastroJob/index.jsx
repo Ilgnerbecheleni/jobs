@@ -22,7 +22,7 @@ function CadastroJob() {
 
   const fetchCategorias = async () => {
     try {
-      const response = await api.get('categorias');
+      const response = await api.get('/categorias');
       setCategorias(response.data);
     } catch (error) {
       console.error('Erro ao buscar categorias:', error);
